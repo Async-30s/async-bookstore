@@ -18,17 +18,27 @@ function Async30_DB()
 			database : 'sjdb' 
 	};
 	
-	this.conn 			 = null;
-	this.async_list 	 = [];
-	this.sql			 = null;
+	// member variable
+	this.conn 			 = null; // connection handling obj
+	this.sql			 = null; // sql data
+	this.sql_cmd		 = null; // sql command
+	this.async_list 	 = [];   // processing function list
+	
+	// member function
+	// Async30_DB.prototype.printConfig  
+	// Async30_DB.prototype.setConfig    
+	// Async30_DB.prototype.conn_clear   
+	// Async30_DB.prototype.async_query  
+	// Async30_DB.prototype.async_start 
 }
 
-
+// print db config info
 Async30_DB.prototype.printConfig = function()
 {
 	console.log("config    : ",this.config);
 };
 
+// set db config info
 Async30_DB.prototype.setConfig = function(conf)
 {
 	if(conf !== undefined && conf !== null)
@@ -39,12 +49,13 @@ Async30_DB.prototype.setConfig = function(conf)
 		}
 	}
 };
-
+// clear db connection info
 Async30_DB.prototype.conn_clear = function()
 {
 	this.conn 			 = null;
-	this.async_list 	 = [];
 	this.sql			 = null;
+	this.sql_cmd		 = null; 
+	this.async_list 	 = [];
 };
 
 Async30_DB.prototype.async_query = function(sql,value,cb)
@@ -56,19 +67,29 @@ Async30_DB.prototype.async_query = function(sql,value,cb)
 	}
 	
 	var self = this;
+	
+	// get sql command
+	var sql_data = sql.split(' ');
+	self.sql_cmd = sql_data[0].toUpperCase();
+	
+	// bind value to sql 
 	self.sql = mysql.format(sql,value);
+	
 	self.async_start(function(err,result){
+		var reval;
+		if(!err){
+			if(self.sql_cmd === 'SELECT') {
+				// select result
+				reval = result[1];
+			}
+			else{
+				reval = self.sql_cmd + '_OK';
+			}
+		}
 		
 		// db connection info clear
 		self.conn_clear();
-		
-		if(!err)
-		{
-			
-			
-		}
-		
-		cb(err,result);
+		cb(err,reval);
 	});
 	
 };
@@ -76,7 +97,7 @@ Async30_DB.prototype.async_query = function(sql,value,cb)
 Async30_DB.prototype.async_start = function(cb)
 {
 	this.async_list.push(Async30_DB.async_proc(Async30_DB.async_connection,this));
-	this.async_list.push(Async30_DB.async_proc(Async30_DB.async_query,this));
+	this.async_list.push(Async30_DB.async_proc(Async30_DB.async_query_send,this));
 	this.async_list.push(Async30_DB.async_proc(Async30_DB.async_disconnection,this));
 	
 	async.series(this.async_list,cb);
@@ -119,7 +140,7 @@ Async30_DB.async_connection = function (async_db,cb)
 	}
 };
 
-Async30_DB.async_query = function(async_db,cb)
+Async30_DB.async_query_send = function(async_db,cb)
 {
 	async_db.conn.query(async_db.sql , function(err, result) {
 		if(err){

@@ -14,6 +14,16 @@ var value = 'sung';
 */
 
 /*
+var sql = "UPDATE t_table SET model=? WHERE name=?";
+var value = ['up_model','test1'];
+*/
+
+/*
+var sql = "DELETE FROM t_table WHERE name=?";
+var value = 'p222';
+*/ 
+
+/*
 var sql = "INSERT INTO t_table SET ?";
 var value = {name:'ppp',model:'sss',series:'jjj'};
 */
@@ -37,16 +47,15 @@ var value = [[
 */
 /////////////////////////////////////////////////////////////////
 
-db.printConfig();
+//db.printConfig();
 var sql = "SELECT name,model FROM t_table WHERE model=?";
-var value = 's111';
+var value = 'up_model';
+
 db.async_query(sql,value,function(err,result){
-	if(err)
-	{
+	if(err){
 		console.log(err);
 	}
-	else
-	{
+	else{
 		console.log(result);
 	}
 });
