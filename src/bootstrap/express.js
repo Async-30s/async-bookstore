@@ -19,7 +19,7 @@ var cors_rule = function(req, res, next){
 
 module.exports = function(app){
 	app.set('views', config.get('path.views'));
-	app.set('view engine', 'jade');
+	app.set('view engine', config.get('view_engine'));
 	
 	app.use(express.static(config.get('path.public')));
 	app.use(cookie_parser());

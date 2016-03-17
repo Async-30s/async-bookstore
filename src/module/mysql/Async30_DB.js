@@ -9,13 +9,15 @@
 
 var mysql = require('mysql');
 var async = require('async');
+var config = require('config');
 
 function Async30_DB()
 {
 	this.config = {
-			user     : 'sj',
-			password : 'sj',
-			database : 'sjdb' 
+			host	 : config.get('db.host'),
+			user     : config.get('db.user'),
+			password : config.get('db.password'),
+			database : config.get('db.databaseName') 
 	};
 	
 	// member variable
