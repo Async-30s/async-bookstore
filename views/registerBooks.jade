@@ -8,7 +8,10 @@ html(lang='ko')
         meta(http-equiv='X-UA-Compatible', content='IE=edge')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         // 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다
-        title ASync-BookStore Login
+        title Register Books
+
+        link(rel='stylesheet', href='/css/style.css')
+
         // 부트스트랩
         link(href='/css/bootstrap.min.css', rel='stylesheet')
         // IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js
@@ -17,19 +20,68 @@ html(lang='ko')
           script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
           script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
     body
+        .container
+            form.form-signin(action='/regBooks' method='post')
+                h2.form-signin-heading 등록하실 책의 정보를 입력하세요
 
-        div.row
-            h1 중고 책 등록
-            p 등록할 책의 정보를 입력하세요
+                div.row
+                    div.col-md-3
+                        div.row.align-right 도서명
+                    div.col-md-5
 
-        div.row
-            div.col-md-1 &nbsp;
-            div.col-md-4 도서명
-            div.col-md-5 dlq
+                div.row
+                    div.col-md-3
+                        div.row.align-right 저자명
+                    div.col-md-5
 
+                div.row
+                    div.col-md-3
+                        div.row.align-right 카테고리
+                    div.col-md-5
 
+                div.row
+                    div.col-md-1 &nbsp;
+                    div.col-md-3
+                        div.row.align-right 발행연도
+                    div.col-md-5
 
-        // jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다)
+                div.row
+                    div.col-md-1 &nbsp;
+                    div.col-md-3
+                        div.row.align-right ISBN 번호
+                    div.col-md-5
+
+                div.row
+                    div.col-md-1 &nbsp;
+                    div.col-md-3
+                        div.row.align-right 책 상태
+                    div.col-md-5
+
+                div.row
+                    div.col-md-1 &nbsp;
+                    div.col-md-3
+                        div.row.align-right 판매 희망 가격
+                    div.col-md-5
+
+                div.row
+                    div.col-md-1 &nbsp;
+                    div.col-md-3
+                        div.row.align-right 도서 구매 가격
+                    div.col-md-5
+
+                div.row
+                    div.col-md-1 &nbsp;
+                    div.col-md-3
+                        div.row.align-right 책 이미지 등록
+                    div.col-md-5
+
+                div.row
+                    div.col-md-1 &nbsp;
+                    div.col-md-3
+                        div.row.align-right 판매 방법
+                    div.col-md-5
+
+// jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다)
         script(src='/js/lib/jquery-1.12.1.min.js')
         // 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요
         script(src='/js/lib/bootstrap.min.js')
