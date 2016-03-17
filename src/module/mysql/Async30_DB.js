@@ -9,17 +9,19 @@
 
 var mysql = require('mysql');
 var async = require('async');
-var config = require('config');
+//var config = require('config');
 
 function Async30_DB()
 {
+	this.config = null;
+/*	
 	this.config = {
 			host	 : config.get('db.host'),
 			user     : config.get('db.user'),
 			password : config.get('db.password'),
 			database : config.get('db.databaseName') 
 	};
-	
+*/
 	// member variable
 	this.conn 			 = null; // connection handling obj
 	this.sql			 = null; // sql data
@@ -65,6 +67,12 @@ Async30_DB.prototype.async_query = function(sql,value,cb)
 	if(sql === undefined || sql === null)
 	{
 		cb('Undefined SQL');
+		return;
+	}
+	
+	if(!Async30_DB.query_valid(sql,value))
+	{
+		cb('Invalid SQL & value : sql = ' + sql +', value = ' + value );
 		return;
 	}
 	
@@ -166,6 +174,26 @@ Async30_DB.async_disconnection = function(async_db,cb)
 			cb(null,flow);
 		}
 	});
+};
+
+Async30_DB.query_valid = function(sql,val)
+{
+	var q_cnt=0;
+	var v_cnt=0;
+	var reval=0;
+	
+	for(var i=0; i<sql.length; ++i)
+	{
+		if(sql[i] === '?')
+		{
+			q_cnt++;
+		}
+	}
+	
+	((val instanceof Array) ? v_cnt = val.length : v_cnt = 1);
+	((q_cnt === v_cnt) ? reval=1 : reval=0);
+	
+	return reval;
 };
 
 module.exports = Async30_DB;

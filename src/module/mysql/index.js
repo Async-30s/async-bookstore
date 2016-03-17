@@ -49,7 +49,7 @@ var value = [[
 
 //db.printConfig();
 var sql = "SELECT name,model FROM t_table WHERE model=?";
-var value = 'up_model';
+var value = ['up_model','test'];
 
 db.async_query(sql,value,function(err,result){
 	if(err){
