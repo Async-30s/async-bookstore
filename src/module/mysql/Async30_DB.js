@@ -9,19 +9,17 @@
 
 var mysql = require('mysql');
 var async = require('async');
-//var config = require('config');
+var config = require('config');
 
 function Async30_DB()
 {
-	this.config = null;
-/*	
 	this.config = {
 			host	 : config.get('db.host'),
 			user     : config.get('db.user'),
 			password : config.get('db.password'),
 			database : config.get('db.databaseName') 
 	};
-*/
+
 	// member variable
 	this.conn 			 = null; // connection handling obj
 	this.sql			 = null; // sql data
