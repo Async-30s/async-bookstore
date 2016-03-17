@@ -18,4 +18,8 @@ module.exports = function(app){
 			res.end(data);
 		});
 	});
+
+	app.get('/regBooks', function(req, res, next) {
+		res.render('registerBooks');
+	});
 }

@@ -54,7 +54,7 @@ Async30_DB.prototype.setConfig = function(conf)
 // clear db connection info
 Async30_DB.prototype.conn_clear = function()
 {
-	this.conn 			 = null;
+	this.conn			 = null;
 	this.sql			 = null;
 	this.sql_cmd		 = null; 
 	this.async_list 	 = [];
